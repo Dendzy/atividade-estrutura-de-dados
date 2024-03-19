@@ -206,6 +206,7 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
 
         @Override
         public void add(Item x) {
+            //Inserir apos atual
             No temp = new No();
             temp.dado = x;
 
@@ -234,4 +235,17 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
         }
         return queue;
     }
+
+    public static void main(String[] args) {
+        DequeSearch<String, Integer> st = new DequeSearch<String, Integer>();
+        for(int i = 0; !StdIn.isEmpty(); i++){
+            String key = StdIn.readString();
+            StdOut.println( key + " " + i);
+            st.put(key, i);
+        }
+        StdOut.println(st.keys().toString());
+        StdOut.println("-----------");
+        StdOut.println(st.toString());
+    }
 }
+// end of class

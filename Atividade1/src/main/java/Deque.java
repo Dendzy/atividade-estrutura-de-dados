@@ -174,4 +174,56 @@ public class Deque<Item> implements Iterable<Item> {
         }
         return s.toString();
     }
+
+    public static void main(String[] args) {
+        int n = Integer.parseInt(args[0]);
+
+        //add elements 1, ..., n
+        StdOut.println(n + " random integers between 0 and 99");
+        Deque<Integer> list = new Deque<Integer>();
+
+        // beginning of Deque-4.png
+        for(int i = 0; i < n; i++){
+            list.push_front(i);
+        }
+        StdOut.println(list);
+        StdOut.println();
+        while( !list.isEmpty()){
+            StdOut.println(list.pop_front());
+        }
+        for( int i = 0; i < n; i++){
+            list.push_back(i);
+        }
+        StdOut.println(list);
+        StdOut.println();
+
+        ListIterator<Integer> it = list.iterator();
+        while(it.hasNext()){
+            int x = it.next();
+            it.set(x + 1);
+        }
+
+        StdOut.println(list);
+        StdOut.println();
+        while(it.hasPrevious()){
+            int x = it.previous();
+            it.set(x + x + x);
+        }
+        StdOut.println(list);
+        StdOut.println();
+        while(it.hasNext()){
+            int x = it.next();
+            if(x%2 == 0) it.remove();
+        }
+//*/]]
+        StdOut.println(list);
+        StdOut.println();
+        while(it.hasPrevious()){
+            int x = it.previous();
+            it.add(x + x);
+        }
+        StdOut.println(list);
+        StdOut.println();
+    }
 }
+// end of class
