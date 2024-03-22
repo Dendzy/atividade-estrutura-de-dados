@@ -12,7 +12,7 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
         Sentinela.ant = Sentinela;
     }
 
-    private class No{
+    private class No{ // Classe nó
         private Item dado;
         private Key chave;
         private No prox;
@@ -29,7 +29,7 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
 
         Sentinela.prox = temp;
         temp.prox.ant = temp;
-        n++;
+        ++n;
     }
 
     public void push_back(Key key, Item item) {
@@ -51,6 +51,7 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
     }
 
     public Item get(Key key) {
+        System.out.println(key);
         if(key == null) throw new IllegalArgumentException("Argumento para get() é nulo!");
         for(No x = Sentinela.prox; x != Sentinela; x = x.prox) {
             if(key.equals(x.chave)) {
@@ -68,7 +69,7 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
     private void remove(No temp) {
         temp.ant.prox = temp.prox;
         temp.prox.ant = temp.ant;
-        n--;
+        --n;
     }
 
     private void delete(No x, Key key) {
@@ -77,7 +78,7 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
             remove(x);
             return;
         }
-        delete(x.prox,key);
+        delete(x.prox, key);
     }
 
     public void put(Key key, Item val) {
@@ -99,9 +100,10 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
         No temp = Sentinela.prox;
         Item meuDado = temp.dado;
 
-        temp.prox.ant = temp.ant;
         temp.ant.prox = temp.prox;
-        n--;
+        temp.prox.ant = temp.ant;
+
+        --n;
         return meuDado;
     }
 
@@ -111,7 +113,7 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
 
         temp.prox.ant = temp.ant;
         temp.ant.prox = temp.prox;
-        n--;
+        --n;
         return meuDado;
     }
 
@@ -137,27 +139,23 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
         private int indice = 0;
         private No acessadoultimo = null;
 
-        @Override
+
         public boolean hasNext() {
             return indice < (n);
         }
 
-        @Override
         public boolean hasPrevious() {
             return indice > 0;
         }
 
-        @Override
         public int previousIndex() {
             return indice - 1;
         }
 
-        @Override
         public int nextIndex() {
             return indice;
         }
 
-        @Override
         public Item next() {
             if(!hasNext()) return null;
 
@@ -168,7 +166,6 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
             return meuDado;
         }
 
-        @Override
         public Item previous() {
             if(!hasPrevious()) return null;
             atual = atual.ant;
@@ -184,27 +181,28 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
             return atual.dado;
         }
 
-        @Override
+
         public void set(Item x) {
             if(acessadoultimo == null) throw new IllegalStateException();
             acessadoultimo.dado = x;
         }
 
-        @Override
+
         public void remove() {
             if(acessadoultimo == null) throw new IllegalStateException();
             acessadoultimo.ant.prox = acessadoultimo.prox;
             acessadoultimo.prox.ant = acessadoultimo.ant;
-            n--;
+            --n;
             if(atual == acessadoultimo) {
                 atual = acessadoultimo.prox;
-            } else {
+            } else
                 indice--;
-                acessadoultimo = null;
-            }
+
+            acessadoultimo = null;
+
         }
 
-        @Override
+
         public void add(Item x) {
             //Inserir apos atual
             No temp = new No();
@@ -219,7 +217,7 @@ public class DequeSearch<Key, Item> implements Iterable<Item> {
         }
     }
 
-    @Override
+
     public String toString() {
         StringBuilder s = new StringBuilder();
         for(Item item: this) {

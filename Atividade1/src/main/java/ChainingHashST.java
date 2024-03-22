@@ -11,6 +11,10 @@ public class ChainingHashST<Key, Value> {
     private int m;
     private DequeSearch<Key,Value>[] st;
 
+    public ChainingHashST() {
+        this(CAPACIDADE_INICIAL);
+    }
+
     public ChainingHashST(int m) {
         this.m = m;
         st = (DequeSearch<Key, Value>[]) new DequeSearch[m];
@@ -19,9 +23,6 @@ public class ChainingHashST<Key, Value> {
         }
     }
 
-    public ChainingHashST() {
-        this(CAPACIDADE_INICIAL);
-    }
 
     private void resize(int chains) {
         ChainingHashST<Key,Value> temp = new ChainingHashST<Key,Value>(chains);
@@ -32,7 +33,7 @@ public class ChainingHashST<Key, Value> {
         }
         this.m = temp.m;
         this.n = temp.n;
-        this.st = st;
+        this.st = temp.st;
     }
 
     private int hashTextbook(Key key) {
@@ -104,6 +105,7 @@ public class ChainingHashST<Key, Value> {
             System.out.println("\n\nUso: Java ChainingHashST arquivo1 arquivo2\n\n");
             System.exit(0);
         }
+
         int n;
 
         String tmp;
@@ -124,6 +126,24 @@ public class ChainingHashST<Key, Value> {
                 city = new Cidade(st.nextToken(), Integer.parseInt(st.nextToken()));
                 tabelahash.put(city.get_nome(),city);
             }
+            br.close();
+            in1.close();
+
+            in1 = new FileReader(args[1]);
+            br = new BufferedReader(in1);
+
+            n = Integer.parseInt(br.readLine());
+
+            for(int j=0; j< n; j++){
+                tmp = br.readLine();
+
+                city = tabelahash.get(tmp);
+                if(city == null) System.out.print("\n [Failed] "+ tmp+ " não foi encontrada.");
+                else{
+                    System.out.println("\n[Ok]\t " + city.get_nome()+ " foi encontrada. Temperatura lá é "+ city.get_temp()+ " F");
+                }
+            }
+
             br.close();
             in1.close();
 

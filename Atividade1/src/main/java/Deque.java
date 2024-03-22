@@ -5,12 +5,6 @@ public class Deque<Item> implements Iterable<Item> {
     private int n;
     private No Sentinela;
 
-    private class No {
-        private Item dado;
-        private No prox;
-        private No ant;
-    }
-
     public Deque() {
         n = 0;
         Sentinela = new No();
@@ -18,23 +12,29 @@ public class Deque<Item> implements Iterable<Item> {
         Sentinela.ant = Sentinela;
     }
 
+    private class No {
+        private Item dado;
+        private No prox;
+        private No ant;
+    }
+
     public void push_front(Item item) {
         No temp = new No();
         temp.dado = item;
 
         temp.ant = Sentinela;
-        temp.prox = Sentinela;
+        temp.prox = Sentinela.prox;
 
         Sentinela.prox = temp;
         temp.prox.ant = temp;
-        n++;
+        ++n;
     }
 
     public void push_back(Item item) {
         No temp = new No();
         temp.dado = item;
 
-        temp.ant = Sentinela;
+        temp.ant = Sentinela.ant;
         temp.prox = Sentinela;
 
         Sentinela.ant = temp;
@@ -48,7 +48,7 @@ public class Deque<Item> implements Iterable<Item> {
 
         temp.ant.prox = temp.prox;
         temp.prox.ant = temp.ant;
-        n--;
+        --n;
         return meuDado;
     }
 
@@ -58,7 +58,7 @@ public class Deque<Item> implements Iterable<Item> {
 
         temp.ant.prox = temp.prox;
         temp.prox.ant = temp.ant;
-        n--;
+        --n;
         return meuDado;
     }
 
@@ -84,27 +84,27 @@ public class Deque<Item> implements Iterable<Item> {
         private int indice = 0;
         private No acessadoultimo = null;
 
-        @Override
+
         public boolean hasNext() {
             return indice < (n);
         }
 
-        @Override
+
         public boolean hasPrevious() {
             return indice > 0;
         }
 
-        @Override
+
         public int previousIndex() {
             return indice - 1;
         }
 
-        @Override
+
         public int nextIndex() {
             return indice;
         }
 
-        @Override
+
         public Item next() {
             if (!hasNext()) return null;
 
@@ -115,9 +115,9 @@ public class Deque<Item> implements Iterable<Item> {
             return meuDado;
         }
 
-        @Override
+
         public Item previous() {
-            if (!hasNext()) return null;
+            if (!hasPrevious()) return null;
             atual = atual.ant;
 
             Item meuDado = atual.dado;
@@ -132,27 +132,27 @@ public class Deque<Item> implements Iterable<Item> {
             return atual.dado;
         }
 
-        @Override
+
         public void set(Item x) {
             if (acessadoultimo == null) throw new IllegalStateException();
             acessadoultimo.dado = x;
         }
 
-        @Override
+
         public void remove() {
             if (acessadoultimo == null) throw new IllegalStateException();
             acessadoultimo.ant.prox = acessadoultimo.prox;
             acessadoultimo.prox.ant = acessadoultimo.ant;
-            n--;
+            --n;
             if (atual == acessadoultimo) {
                 atual = acessadoultimo.prox;
-            } else {
+            } else
                 indice--;
-                acessadoultimo = null;
-            }
+            acessadoultimo = null;
+
         }
 
-        @Override
+
         public void add(Item x) {
             No temp = new No();
             temp.dado = x;
@@ -160,13 +160,13 @@ public class Deque<Item> implements Iterable<Item> {
             temp.prox = atual.prox;
             temp.ant = atual;
 
-            temp.ant.prox = temp;
+            temp.prox.ant = temp;
             atual.prox = temp;
             n++;
         }
     }
 
-    @Override
+
     public String toString() {
         StringBuilder s = new StringBuilder();
         for (Item item : this) {
