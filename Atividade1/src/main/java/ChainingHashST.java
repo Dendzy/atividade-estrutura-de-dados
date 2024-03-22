@@ -138,7 +138,7 @@ public class ChainingHashST<Key, Value> {
                 tmp = br.readLine();
 
                 city = tabelahash.get(tmp);
-                if(city == null) System.out.print("\n [Failed] "+ tmp+ " não foi encontrada.");
+                if(city == null) System.out.print("\n [Failed] "+ tmp+ " não foi encontrada.\n");
                 else{
                     System.out.println("\n[Ok]\t " + city.get_nome()+ " foi encontrada. Temperatura lá é "+ city.get_temp()+ " F");
                 }
